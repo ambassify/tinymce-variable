@@ -27,8 +27,19 @@
                 selector: "textarea",
                 content_css: 'style.css',
                 menubar: false,
-                toolbar: "bold,italic",
+                toolbar: "bold,italic,mybutton",
                 statusbar: false,
+
+                setup : function(ed) {
+                    ed.addButton('mybutton', {
+                        title : 'My button',
+                        text : 'Insert variable',
+                        onclick : function() {
+                            ed.focus();
+                            ed.selection.setContent('{account_id}');
+                        }
+                    });
+                },
 
                 // variable plugin related
                 plugins: "variables",
@@ -37,9 +48,10 @@
                     phone: 'Phone',
                     community_name: 'Community name',
                     email: 'Email address',
-                    sender: 'Sender name'
+                    sender: 'Sender name',
+                    account_id: 'Account ID'
                 },
-                variable_valid: ['username', 'sender']
+                //variable_valid: ['username', 'sender', 'phone', 'community_name', 'email']
             });
         </script>
 
