@@ -1,0 +1,30 @@
+{
+  "name": "tinymce-variable",
+  "version": "0.1.0",
+  "description": "Make it possible to use variables in your TinyMCE editor.",
+  "main": "src/main.js",
+  "keywords": [
+    "tinyMCE",
+    "variables",
+    "customize"
+  ],
+  "authors": [
+    "Sitebase (Wim Mostmans)"
+  ],
+  "license": "MIT",
+  "homepage": "http://sitebase.github.io/tinymce-variable",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "package.json"
+  ],
+  "dependencies": {
+    "tinymce-dist": "~4.1.7"
+  },
+  "devDependencies": {
+    "qunit": "~1.16.0"
+  }
+}

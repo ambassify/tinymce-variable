@@ -1,0 +1,14 @@
+body {
+    font-size: 14px;
+    line-height: 1.4em;
+}
+.variable {
+    cursor: default;
+    background-color: #65b9dd;
+    color: #FFF;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 10px;
+}

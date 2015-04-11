@@ -1,0 +1,42 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Preview TinyMCE variable plugin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="bower_components/tinymce-dist/tinymce.min.js"></script>
+        <script src="src/main.js"></script>
+        <style>
+            body .mce-tinymce {
+                border: 1px solid #9e9e9e;
+                border-radius: 5px;
+                overflow: hidden;
+            }
+            body .mce-edit-area {
+                border: none;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            tinymce.init({
+                selector: "textarea",
+                content_css: 'style.css',
+                plugins: "variables",
+                menubar: false,
+                toolbar: "bold,italic",
+                statusbar: false
+            });
+        </script>
+
+        <!-- Place this in the body of the page content -->
+        <form method="post">
+            <textarea rows="18">Dear {username},
+<p>Thanks for joining our {community_name} community. I hope you'll enjoy your time here. If you would have any question don't hasitate to call me on {phone} or shoot me an email at {email}.</p>
+Sincerely,<br />
+{sender}</textarea>
+        </form>
+    </body>
+</html>
