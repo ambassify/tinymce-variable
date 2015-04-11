@@ -22,12 +22,24 @@
     <body>
         <script type="text/javascript">
             tinymce.init({
+
+                // basic tinyMCE stuff
                 selector: "textarea",
                 content_css: 'style.css',
-                plugins: "variables",
                 menubar: false,
                 toolbar: "bold,italic",
-                statusbar: false
+                statusbar: false,
+
+                // variable plugin related
+                plugins: "variables",
+                variable_mappers: {
+                    username: 'Username',
+                    phone: 'Phone',
+                    community_name: 'Community name',
+                    email: 'Email address',
+                    sender: 'Sender name'
+                },
+                variable_valid: ['username', 'sender']
             });
         </script>
 

@@ -15,19 +15,22 @@ tinymce.PluginManager.add('variables', function(editor) {
     var VK = tinymce.util.VK;
     var stringVariableRegex = new RegExp('{([a-z. _]*)?}', 'g');
 
-    // make the variables more readable by replacing them
-    // with another string
-    var mappers = {
-        username: 'Username',
-        email: 'Email',
-        widget_name: 'Widget name',
-        entry_id: 'Entry ID'
-    }
+    /**
+     * Object that is used to replace the variable string to be used
+     * in the HTML view
+     * @type {object}
+     */
+    var mappers = editor.getParam("variable_mappers", {});
 
-    // let user define a list of valid variables
-    var valid_variables = {
 
-    };
+    /**
+     * define a list of variables that are allowed
+     * if the variable is not in the list it will not be automatically converterd
+     * by default no validation is done
+     * @todo  make it possible to pass in a function to be used a callback for validation
+     * @type {array}
+     */
+    var valid = editor.getParam("variable_valid", null);
 
     /**
      * convert variable strings into html elements
@@ -71,6 +74,10 @@ tinymce.PluginManager.add('variables', function(editor) {
     function createHTMLVariable( value ) {
 
         var clean_value = value.replace(/[^a-zA-Z._]/g, "");
+
+        // check if variable is valid
+        if( ! isValid(clean_value) )
+            return value;
 
         // map value to a more readable value
         if( mappers.hasOwnProperty(clean_value) )
@@ -143,6 +150,22 @@ tinymce.PluginManager.add('variables', function(editor) {
         }
 
         return null;
+    }
+
+    /**
+     * check if a certain variable is valid
+     * @param {string} name
+     * @return {bool}
+     */
+    function isValid( name )
+    {
+
+        if( ! valid || valid.length === 0 )
+            return true;
+
+        var valid_string = '|' + valid.join('|') + '|';
+
+        return valid_string.indexOf( '|' + name + '|' ) > -1 ? true : false;
     }
 
     /**
