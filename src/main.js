@@ -189,8 +189,8 @@ tinymce.PluginManager.add('variables', function(editor) {
             } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM )  {
                 e.preventDefault();
                 var variable = currentNode.getAttribute('data-original-variable');
-                var span = editor.dom.create(null, null, 'tester');
-                editor.dom.insertAfter(span, currentNode);
+                var t = document.createTextNode(" ");
+                editor.dom.insertAfter(t, currentNode);
                 setCursor('[data-original-variable="' + variable + '"]');
             } else if( keyCode === VK.LEFT ) {
                 // move cursor before variable
