@@ -186,8 +186,14 @@ tinymce.PluginManager.add('variables', function(editor) {
                 // user can delete variable nodes
                 editor.fire('VariableDelete', {value: currentNode.nodeValue});
                 editor.dom.remove( currentNode );
-            } else if( keyCode === VK.LEFT || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM ) {
-                // allow
+            } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM )  {
+                e.preventDefault();
+                var variable = currentNode.getAttribute('data-original-variable');
+                var span = editor.dom.create(null, null, 'tester');
+                editor.dom.insertAfter(span, currentNode);
+                setCursor('[data-original-variable="' + variable + '"]');
+            } else if( keyCode === VK.LEFT ) {
+                // move cursor before variable
             } else {
                 // user can not modify variables
                 e.preventDefault();
@@ -204,6 +210,16 @@ tinymce.PluginManager.add('variables', function(editor) {
      */
     function handleContentRerender(e) {
         return e.format === 'raw' ? stringToHTML() : HTMLToString();
+    }
+
+    function setCursor(selector) {
+        var ell = editor.dom.select(selector)[0];
+        var next = ell.nextSibling;
+
+        //this.command('mceFocus',false,this.props.name);
+        //editor.selection.setCursorLocation(next);
+        editor.selection.setCursorLocation(next,1);
+
     }
 
 
