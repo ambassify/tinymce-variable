@@ -11,4 +11,6 @@ body {
     font-weight: bold;
     font-style: normal;
     font-size: 10px;
+    display: inline-block;
+    line-height: 12px;
 }
