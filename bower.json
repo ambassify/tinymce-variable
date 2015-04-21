@@ -21,10 +21,8 @@
     "tests",
     "package.json"
   ],
-  "dependencies": {
-    "tinymce-dist": "~4.1.7"
-  },
   "devDependencies": {
+    "tinymce-dist": "~4.1.7",
     "qunit": "~1.16.0"
   }
 }
