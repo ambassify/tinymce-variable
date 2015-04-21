@@ -4,7 +4,7 @@ TinyMCE variable is a plugin that makes it easier to work with variables in text
 
 ## Why
 
-I see a lot of companies that have the need for variables in their editors. Maybe one of the most popular is [MailChimp](http://mailchimp.com/) ([merge tags](http://mailchimp.com/features/merge-tags/)), but non of these companies seems to solve this problem in a very usable way. Especially for non technical people I can imagine that seeing something like `*[FNAME|*` scares the sh*t out of them.
+I see a lot of companies that have the need for variables in their editors. Maybe one of the most popular is [MailChimp](http://mailchimp.com/) ([merge tags](http://mailchimp.com/features/merge-tags/)), but non of these companies seems to solve this problem in a very usable way. Especially for non technical people I can imagine that seeing something like `*|FNAME|*` scares the sh*t out of them. So let's try to create a solution for this use case in the form of a plugin.
 
 ## Demo
 
