@@ -10,8 +10,5 @@
     "main": "src/index.js",
     "bugs": {
         "url": "https://github.com/sitebase/tinymce-variable/issues"
-    },
-    "devDependencies": {
-        "bower": "~1.3.12"
     }
 }
