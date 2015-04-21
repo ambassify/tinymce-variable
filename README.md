@@ -16,6 +16,35 @@ I see a lot of companies that have the need for variables in their editors. Mayb
 * Variables are not editable
 * Delete variables with one hit on the backspace button
 
+## Usage
+
+First include the plugin file in your source:
+
+    <script src="tinymce-variable/src/main.js"></script>
+
+Next add the `variables` plugin to your TinyMCE settings:
+
+    ...
+    plugins: "variables",
+    ...
+
+## Map variable names
+
+You can also automatically map variable names to something more readable or localized for the user.
+An example configuration could be:
+
+    variable_mappers: {
+        account_id: 'Account ID'
+    }
+
+## Variable validation
+
+In some cases it could be useful to only allow a specific set of variables. This can be done with following configuration:
+
+    variable_valid: ['username', 'sender', 'phone', 'community_name', 'email']
+
+If the variable is not in the array it will not be converted to a visual array on the editor.
+
 ## Develop
 
 Start a server to and open it in your browser:
