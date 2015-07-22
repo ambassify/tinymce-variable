@@ -2,7 +2,7 @@
     "name": "tinymce-variable",
     "version": "0.1.0",
     "scripts": {
-        "test": "eslint -c .eslintrc src/main.js"
+        "test": "eslint -c .eslintrc src/plugin.js"
     },
     "repository": {
         "type": "git",
