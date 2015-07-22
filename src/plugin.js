@@ -33,6 +33,48 @@ tinymce.PluginManager.add('variables', function(editor) {
     var valid = editor.getParam("variable_valid", null);
 
     /**
+     * check if a certain variable is valid
+     * @param {string} name
+     * @return {bool}
+     */
+    function isValid( name )
+    {
+
+        if( ! valid || valid.length === 0 )
+            return true;
+
+        var validString = '|' + valid.join('|') + '|';
+
+        return validString.indexOf( '|' + name + '|' ) > -1 ? true : false;
+    }
+
+    /**
+     * convert a text variable "x" to a span with the needed
+     * attributes to style it with CSS
+     * @param  {string} value
+     * @return {string}
+     */
+    function createHTMLVariable( value ) {
+
+        var cleanValue = value.replace(/[^a-zA-Z._]/g, "");
+
+        // check if variable is valid
+        if( ! isValid(cleanValue) )
+            return value;
+
+        // map value to a more readable value
+        if( mappers.hasOwnProperty(cleanValue) )
+            cleanValue = mappers[cleanValue];
+
+        editor.fire('VariableToHTML', {
+            value: value,
+            cleanValue: cleanValue
+        });
+
+        return '<span class="variable" data-original-variable="' + value + '">' + cleanValue + '</span>';
+    }
+
+    /**
      * convert variable strings into html elements
      * @return {void}
      */
@@ -51,7 +93,7 @@ tinymce.PluginManager.add('variables', function(editor) {
         }, 'childNodes');
 
         // loop over all nodes that contain a string variable
-        for (i = 0; i < nodeList.length; i++) {
+        for (var i = 0; i < nodeList.length; i++) {
             nodeValue = nodeList[i].nodeValue.replace(stringVariableRegex, createHTMLVariable);
             div = editor.dom.create('div', null, nodeValue);
             while ((node = div.lastChild)) {
@@ -65,38 +107,13 @@ tinymce.PluginManager.add('variables', function(editor) {
 
     }
 
-    /**
-     * convert a text variable "x" to a span with the needed
-     * attributes to style it with CSS
-     * @param  {string} value
-     * @return {string}
-     */
-    function createHTMLVariable( value ) {
-
-        var clean_value = value.replace(/[^a-zA-Z._]/g, "");
-
-        // check if variable is valid
-        if( ! isValid(clean_value) )
-            return value;
-
-        // map value to a more readable value
-        if( mappers.hasOwnProperty(clean_value) )
-            clean_value = mappers[clean_value];
-
-        editor.fire('VariableToHTML', {
-            value: value,
-            cleanValue: clean_value
-        });
-
-        return '<span class="variable" data-original-variable="' + value + '">' + clean_value + '</span>';
-    }
 
     /**
      * convert HTML variables back into their original string format
      * for example when a user opens source view
      * @return {void}
      */
-    function HTMLToString()
+    function htmlToString()
     {
         var nodeList = [],
             nodeValue,
@@ -112,7 +129,7 @@ tinymce.PluginManager.add('variables', function(editor) {
         }, 'childNodes');
 
         // loop over all nodes that contain a HTML variable
-        for (i = 0; i < nodeList.length; i++) {
+        for (var i = 0; i < nodeList.length; i++) {
             nodeValue = nodeList[i].parentElement.getAttribute('data-original-variable');
             div = editor.dom.create('div', null, nodeValue);
             while ((node = div.lastChild)) {
@@ -126,6 +143,7 @@ tinymce.PluginManager.add('variables', function(editor) {
 
     }
 
+
     /**
      * get variable out of a string
      * keep in mind that this will only return the first variable even if there are more then one
@@ -133,39 +151,34 @@ tinymce.PluginManager.add('variables', function(editor) {
      * @param  {string} value
      * @return {string}
      */
+    /*Unused Function
     function getVariable(value) {
-        var variable, clean_variable;
-        var variable_pick_regex = new RegExp('{([a-z. _]*)?}', 'g');
-        var variable_clean_regex = new RegExp('[^a-zA-Z._]', 'g');
-        var matches = value.match( variable_pick_regex );
+        var variable, cleanVariable;
+        var variablePickRegex = new RegExp('{([a-z. _]*)?}', 'g');
+        var variableCleanRegex = new RegExp('[^a-zA-Z._]', 'g');
+        var matches = value.match( variablePickRegex );
         var result = {};
 
         if( matches.length > 0 ) {
-            for( var i=0 ; i < matches.length ; i++ ) {
+            for( var i = 0; i < matches.length; i++ ) {
                 variable = matches[i];
-                clean_variable = variable.replace( variable_clean_regex, '');
-                result[ clean_variable ] = variable;
+                cleanVariable = variable.replace( variableCleanRegex, '');
+                result[ cleanVariable ] = variable;
             }
             return result;
         }
 
         return null;
-    }
+    }*/
 
-    /**
-     * check if a certain variable is valid
-     * @param {string} name
-     * @return {bool}
-     */
-    function isValid( name )
-    {
+    function setCursor(selector) {
+        var ell = editor.dom.select(selector)[0];
+        var next = ell.nextSibling;
 
-        if( ! valid || valid.length === 0 )
-            return true;
+        //this.command('mceFocus',false,this.props.name);
+        //editor.selection.setCursorLocation(next);
+        editor.selection.setCursorLocation(next, 1);
 
-        var valid_string = '|' + valid.join('|') + '|';
-
-        return valid_string.indexOf( '|' + name + '|' ) > -1 ? true : false;
     }
 
     /**
@@ -186,7 +199,7 @@ tinymce.PluginManager.add('variables', function(editor) {
                 // user can delete variable nodes
                 editor.fire('VariableDelete', {value: currentNode.nodeValue});
                 editor.dom.remove( currentNode );
-            } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM )  {
+            } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM ) {
                 e.preventDefault();
                 var variable = currentNode.getAttribute('data-original-variable');
                 var t = document.createTextNode(" ");
@@ -209,17 +222,7 @@ tinymce.PluginManager.add('variables', function(editor) {
      * @return {void}
      */
     function handleContentRerender(e) {
-        return e.format === 'raw' ? stringToHTML() : HTMLToString();
-    }
-
-    function setCursor(selector) {
-        var ell = editor.dom.select(selector)[0];
-        var next = ell.nextSibling;
-
-        //this.command('mceFocus',false,this.props.name);
-        //editor.selection.setCursorLocation(next);
-        editor.selection.setCursorLocation(next,1);
-
+        return e.format === 'raw' ? stringToHTML() : htmlToString();
     }
 
 
