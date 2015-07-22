@@ -8,7 +8,7 @@ I see a lot of companies that have the need for variables in their editors. Mayb
 
 ## Demo
 
-[Demo example of this plugin](http://sitebase.github.io/tinymce-variable/)
+[Demo example of this plugin](http://bubobox.github.io/tinymce-variable/)
 
 ## Features
 
