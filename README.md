@@ -1,4 +1,4 @@
-# TinyMCE variable
+# TinyMCE variable [![Circle CI](https://circleci.com/gh/bubobox/tinymce-variable/tree/master.svg?style=svg&circle-token=e2d0421c9ff5db92e8ed7719b4e3a1656c0b6365)](https://circleci.com/gh/bubobox/tinymce-variable/tree/master)
 
 TinyMCE variable is a plugin that makes it easier to work with variables in text.
 
