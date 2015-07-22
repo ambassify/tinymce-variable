@@ -6,8 +6,7 @@
         "url": "https://github.com/sitebase/tinymce-variable.git"
     },
     "description": "Make it possible to use variables in your TinyMCE editor.",
-    "author": "Sitebase (Wim Mostmans)",
-    "main": "src/index.js",
+    "main": "src/main.js",
     "bugs": {
         "url": "https://github.com/sitebase/tinymce-variable/issues"
     }
