@@ -1,13 +1,16 @@
 {
     "name": "tinymce-variable",
     "version": "0.1.0",
+    "scripts": {
+        "test": "eslint -c .eslintrc src/main.js"
+    },
     "repository": {
         "type": "git",
-        "url": "https://github.com/sitebase/tinymce-variable.git"
+        "url": "https://github.com/bubobox/tinymce-variable.git"
     },
     "description": "Make it possible to use variables in your TinyMCE editor.",
-    "main": "src/main.js",
+    "main": "src/plugin.js",
     "bugs": {
-        "url": "https://github.com/sitebase/tinymce-variable/issues"
+        "url": "https://github.com/bubobox/tinymce-variable/issues"
     }
 }
