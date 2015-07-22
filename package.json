@@ -10,6 +10,9 @@
     },
     "description": "Make it possible to use variables in your TinyMCE editor.",
     "main": "src/plugin.js",
+    "devDependencies":{
+        "eslint": "^1.0.0-rc-1"
+    },
     "bugs": {
         "url": "https://github.com/bubobox/tinymce-variable/issues"
     }
