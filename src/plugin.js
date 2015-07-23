@@ -232,3 +232,37 @@ tinymce.PluginManager.add('variables', function(editor) {
     editor.on('beforegetcontent', handleContentRerender);
 
 });
+
+tinymce.PluginManager.add('source', function(editor) {
+    editor.addButton('source', {
+        text: 'Edit source',
+        icon: 'code',
+        onclick: function() {
+            var content = editor.getContent();
+
+            // TODO: Remove .variable class
+
+            editor.windowManager.open({
+                title: 'Source code',
+                body: [
+                    {
+                        minHeight: 250,
+                        minWidth: 590,
+                        multiline: true,
+                        name: 'source',
+                        type: 'textbox',
+                        value: content
+                    }
+                ],
+                onsubmit: function(e) {
+                    console.log("[onsubmit]");
+                    editor.setContent(e.data.source); // Insert modified content
+                },
+                onclose: function() {
+                    console.log("[onclose]");
+                    // TODO: Add .variable class
+                }
+            });
+        }
+    });
+});
