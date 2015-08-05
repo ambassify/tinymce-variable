@@ -186,13 +186,12 @@ function htmlToString()
 }
 
 function setCursor(selector) {
-    console.log("setCursor");
-    var ell = editor.dom.select(selector)[0];
+    var ell = currentEditor.dom.select(selector)[0];
     var next = ell.nextSibling;
 
     //this.command('mceFocus',false,this.props.name);
     //editor.selection.setCursorLocation(next);
-    editor.selection.setCursorLocation(next, 1);
+    currentEditor.selection.setCursorLocation(next, 1);
 }
 
 /**
@@ -211,20 +210,20 @@ function editableHandler(e) {
 
         if( keyCode === VK.DELETE || keyCode === VK.BACKSPACE ) {
             // user can delete variable nodes
-            editor.fire('VariableDelete', {value: currentNode.nodeValue});
-            editor.dom.remove( currentNode );
+            currentEditor.fire('VariableDelete', {value: currentNode.nodeValue});
+            currentEditor.dom.remove( currentNode );
         } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM ) {
             e.preventDefault();
             var variable = currentNode.getAttribute('data-original-variable');
             var t = document.createTextNode(" ");
-            editor.dom.insertAfter(t, currentNode);
+            currentEditor.dom.insertAfter(t, currentNode);
             setCursor('[data-original-variable="' + variable + '"]');
         } else if( keyCode === VK.LEFT ) {
             // move cursor before variable
         } else {
             // user can not modify variables
             e.preventDefault();
-            editor.fire('VariableModifyAttempt', {node: currentNode});
+            currentEditor.fire('VariableModifyAttempt', {node: currentNode});
         }
     }
 }
