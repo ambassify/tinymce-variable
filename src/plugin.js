@@ -24,6 +24,14 @@ tinymce.PluginManager.add('variables', function(editor) {
         currentEditor = editor;
         stringToHTML();
     });
+
+    editor.on('keyup', function (e) {
+        stringToHTML();
+    });
+
+    editor.on('keydown', function (e) {
+        editableHandler(e);
+    });
 });
 
 tinymce.PluginManager.add('source', function(editor) {
@@ -175,4 +183,38 @@ function htmlToString()
         currentEditor.dom.remove(nodeList[i].parentElement);
     }
 
+}
+
+/**
+ * this function will make sure variable HTML elements can
+ * not be edited
+ * and also make it possible to delete them by hitting backspace
+ * @param  {object} e
+ * @return {void}
+ */
+function editableHandler(e) {
+    var VK = tinymce.util.VK;
+    var currentNode = tinymce.activeEditor.selection.getNode();
+    var keyCode = e.keyCode;
+
+    if( currentNode.classList.contains('variable') ) {
+
+        if( keyCode === VK.DELETE || keyCode === VK.BACKSPACE ) {
+            // user can delete variable nodes
+            editor.fire('VariableDelete', {value: currentNode.nodeValue});
+            editor.dom.remove( currentNode );
+        } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM ) {
+            e.preventDefault();
+            var variable = currentNode.getAttribute('data-original-variable');
+            var t = document.createTextNode(" ");
+            editor.dom.insertAfter(t, currentNode);
+            setCursor('[data-original-variable="' + variable + '"]');
+        } else if( keyCode === VK.LEFT ) {
+            // move cursor before variable
+        } else {
+            // user can not modify variables
+            e.preventDefault();
+            editor.fire('VariableModifyAttempt', {node: currentNode});
+        }
+    }
 }
