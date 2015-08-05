@@ -185,6 +185,16 @@ function htmlToString()
 
 }
 
+function setCursor(selector) {
+    console.log("setCursor");
+    var ell = editor.dom.select(selector)[0];
+    var next = ell.nextSibling;
+
+    //this.command('mceFocus',false,this.props.name);
+    //editor.selection.setCursorLocation(next);
+    editor.selection.setCursorLocation(next, 1);
+}
+
 /**
  * this function will make sure variable HTML elements can
  * not be edited
