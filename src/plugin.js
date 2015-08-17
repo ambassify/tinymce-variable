@@ -122,9 +122,11 @@ tinymce.PluginManager.add('variables', function(editor) {
 
             // find nodes that contain a HTML variable
         tinymce.walk( editor.getBody(), function(n) {
-            var original = n.parentElement.getAttribute('data-original-variable');
-            if (original !== null) {
-                nodeList.push(n);
+            if (n.nodeType == 1) {
+                var original = n.parentElement.getAttribute('data-original-variable');
+                if (original !== null) {
+                    nodeList.push(n);
+                }
             }
         }, 'childNodes');
 
