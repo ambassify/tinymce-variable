@@ -123,7 +123,7 @@ tinymce.PluginManager.add('variables', function(editor) {
             // find nodes that contain a HTML variable
         tinymce.walk( editor.getBody(), function(n) {
             if (n.nodeType == 1) {
-                var original = n.parentElement.getAttribute('data-original-variable');
+                var original = n.getAttribute('data-original-variable');
                 if (original !== null) {
                     nodeList.push(n);
                 }
@@ -132,15 +132,15 @@ tinymce.PluginManager.add('variables', function(editor) {
 
         // loop over all nodes that contain a HTML variable
         for (var i = 0; i < nodeList.length; i++) {
-            nodeValue = nodeList[i].parentElement.getAttribute('data-original-variable');
+            nodeValue = nodeList[i].getAttribute('data-original-variable');
             div = editor.dom.create('div', null, nodeValue);
             while ((node = div.lastChild)) {
-                editor.dom.insertAfter(node, nodeList[i].parentElement);
+                editor.dom.insertAfter(node, nodeList[i]);
             }
 
             // remove HTML variable node
             // because we now have an text representation of the variable
-            editor.dom.remove(nodeList[i].parentElement);
+            editor.dom.remove(nodeList[i]);
         }
 
     }
