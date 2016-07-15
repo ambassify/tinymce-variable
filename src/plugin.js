@@ -145,34 +145,6 @@ tinymce.PluginManager.add('variables', function(editor) {
 
     }
 
-
-    /**
-     * get variable out of a string
-     * keep in mind that this will only return the first variable even if there are more then one
-     * for example "{hello} test {world}" will return "hello"
-     * @param  {string} value
-     * @return {string}
-     */
-    /*Unused Function
-    function getVariable(value) {
-        var variable, cleanVariable;
-        var variablePickRegex = new RegExp('{([a-z. _]*)?}', 'g');
-        var variableCleanRegex = new RegExp('[^a-zA-Z._]', 'g');
-        var matches = value.match( variablePickRegex );
-        var result = {};
-
-        if( matches.length > 0 ) {
-            for( var i = 0; i < matches.length; i++ ) {
-                variable = matches[i];
-                cleanVariable = variable.replace( variableCleanRegex, '');
-                result[ cleanVariable ] = variable;
-            }
-            return result;
-        }
-
-        return null;
-    }*/
-
     function setCursor(selector) {
         var ell = editor.dom.select(selector)[0];
         var next = ell.nextSibling;
