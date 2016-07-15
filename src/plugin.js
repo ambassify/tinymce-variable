@@ -71,7 +71,7 @@ tinymce.PluginManager.add('variables', function(editor) {
             cleanValue: cleanValue
         });
 
-        return '<span class="variable" data-original-variable="' + value + '">' + cleanValue + '</span>';
+        return '<span class="variable" data-original-variable="' + value + '" contenteditable="false">' + cleanValue + '</span>';
     }
 
     /**
@@ -184,40 +184,6 @@ tinymce.PluginManager.add('variables', function(editor) {
     }
 
     /**
-     * this function will make sure variable HTML elements can
-     * not be edited
-     * and also make it possible to delete them by hitting backspace
-     * @param  {object} e
-     * @return {void}
-     */
-    function editableHandler(e) {
-
-        var currentNode = tinymce.activeEditor.selection.getNode();
-        var keyCode = e.keyCode;
-
-        if( currentNode.classList.contains('variable') ) {
-
-            if( keyCode === VK.DELETE || keyCode === VK.BACKSPACE ) {
-                // user can delete variable nodes
-                editor.fire('VariableDelete', {value: currentNode.nodeValue});
-                editor.dom.remove( currentNode );
-            } else if ( keyCode === VK.SPACEBAR || keyCode === VK.RIGHT || keyCode === VK.TOP || keyCode === VK.BOTTOM ) {
-                e.preventDefault();
-                var variable = currentNode.getAttribute('data-original-variable');
-                var t = document.createTextNode(" ");
-                editor.dom.insertAfter(t, currentNode);
-                setCursor('[data-original-variable="' + variable + '"]');
-            } else if( keyCode === VK.LEFT ) {
-                // move cursor before variable
-            } else {
-                // user can not modify variables
-                e.preventDefault();
-                editor.fire('VariableModifyAttempt', {node: currentNode});
-            }
-        }
-    }
-
-    /**
      * handle formatting the content of the editor based on
      * the current format. For example if a user switches to source view and back
      * @param  {object} e
@@ -230,7 +196,6 @@ tinymce.PluginManager.add('variables', function(editor) {
 
     editor.on('nodechange', stringToHTML );
     editor.on('keyup', stringToHTML );
-    editor.on('keydown', editableHandler );
     editor.on('beforegetcontent', handleContentRerender);
 
 });
