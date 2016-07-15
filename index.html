@@ -31,12 +31,12 @@
                 statusbar: false,
 
                 setup : function(ed) {
+                    window.tester = ed;
                     ed.addButton('mybutton', {
                         title : 'My button',
                         text : 'Insert variable',
                         onclick : function() {
-                            ed.focus();
-                            ed.selection.setContent('{account_id}');
+                            ed.plugins.variables.addVariable('account_id');
                         }
                     });
                 },

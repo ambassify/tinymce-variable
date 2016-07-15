@@ -165,9 +165,20 @@ tinymce.PluginManager.add('variables', function(editor) {
         return e.format === 'raw' ? stringToHTML() : htmlToString();
     }
 
+    /**
+     * insert a variable into the editor at the current cursor location
+     * @param {string} value
+     * @return {void}
+     */
+    function addVariable(value) {
+        var htmlVariable = createHTMLVariable(value);
+        editor.execCommand('mceInsertContent', false, htmlVariable);
+    }
 
     editor.on('nodechange', stringToHTML );
     editor.on('keyup', stringToHTML );
     editor.on('beforegetcontent', handleContentRerender);
+
+    this.addVariable = addVariable;
 
 });
