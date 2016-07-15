@@ -98,15 +98,16 @@ tinymce.PluginManager.add('variables', function(editor) {
             div = editor.dom.create('div', null, nodeValue);
             while ((node = div.lastChild)) {
                 editor.dom.insertAfter(node, nodeList[i]);
+
+                if(typeof node.getAttribute === 'function' && node.hasAttribute('data-original-variable')) {
+                    var next = node.nextSibling;
+                    editor.selection.setCursorLocation(next);
+                }
             }
 
-            // remove text variable node
-            // because we now have an HTML representation of the variable
             editor.dom.remove(nodeList[i]);
         }
-
     }
-
 
     /**
      * convert HTML variables back into their original string format
@@ -147,12 +148,12 @@ tinymce.PluginManager.add('variables', function(editor) {
 
     function setCursor(selector) {
         var ell = editor.dom.select(selector)[0];
-        var next = ell.nextSibling;
-
-        //this.command('mceFocus',false,this.props.name);
-        //editor.selection.setCursorLocation(next);
-        editor.selection.setCursorLocation(next, 1);
-
+        console.log('sel', selector, ell);
+        if(ell) {
+            console.log('set cursor', ell, next);
+            var next = ell.nextSibling;
+            editor.selection.setCursorLocation(next);
+        }
     }
 
     /**
