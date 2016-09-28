@@ -68,14 +68,14 @@ tinymce.PluginManager.add('variables', function(editor) {
         if( ! isValid(cleanValue) )
             return value;
 
-        cleanValue = getMappedValue(cleanValue);
+        var cleanMappedValue = getMappedValue(cleanValue);
 
         editor.fire('VariableToHTML', {
             value: value,
             cleanValue: cleanValue
         });
 
-        return '<span class="variable" data-original-variable="' + value + '" contenteditable="false">' + cleanValue + '</span>';
+        return '<span class="variable" data-original-variable="{' + cleanValue + '}" contenteditable="false">' + cleanMappedValue + '</span>';
     }
 
     /**
@@ -177,6 +177,7 @@ tinymce.PluginManager.add('variables', function(editor) {
      */
     function addVariable(value) {
         var htmlVariable = createHTMLVariable(value);
+        console.log('insert', value, htmlVariable);
         editor.execCommand('mceInsertContent', false, htmlVariable);
     }
 
