@@ -49,4 +49,4 @@ If the variable is not in the array it will not be converted to a visual array o
 
 Start a server to and open it in your browser:
 
-    python -m SimpleHTTPServer
+    npm run serve
