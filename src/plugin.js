@@ -20,8 +20,7 @@ tinymce.PluginManager.add('variables', function(editor) {
      * in the HTML view
      * @type {object}
      */
-    var mappers = editor.getParam("variable_mappers", {});
-
+    var mapper = editor.getParam("variable_mapper", {});
 
     /**
      * define a list of variables that are allowed
@@ -48,6 +47,13 @@ tinymce.PluginManager.add('variables', function(editor) {
         return validString.indexOf( '|' + name + '|' ) > -1 ? true : false;
     }
 
+    function getMappedValue( cleanValue ) {
+        if(typeof mapper === 'function')
+            return mapper(cleanValue);
+
+        return mapper.hasOwnProperty(cleanValue) ? mapper[cleanValue] : cleanValue;
+    }
+
     /**
      * convert a text variable "x" to a span with the needed
      * attributes to style it with CSS
@@ -62,9 +68,7 @@ tinymce.PluginManager.add('variables', function(editor) {
         if( ! isValid(cleanValue) )
             return value;
 
-        // map value to a more readable value
-        if( mappers.hasOwnProperty(cleanValue) )
-            cleanValue = mappers[cleanValue];
+        cleanValue = getMappedValue(cleanValue);
 
         editor.fire('VariableToHTML', {
             value: value,

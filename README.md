@@ -33,8 +33,14 @@ Next add the `variables` plugin to your TinyMCE settings:
 You can also automatically map variable names to something more readable or localized for the user.
 An example configuration could be:
 
-    variable_mappers: {
+    variable_mapper: {
         account_id: 'Account ID'
+    }
+
+The variable mapper can also be a function which gets the variable name passed as argument:
+
+    variable_mapper: function(variable) {
+        return 'exmaple:' + variable;
     }
 
 ## Variable validation
