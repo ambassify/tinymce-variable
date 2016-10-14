@@ -1,10 +1,12 @@
 # TinyMCE variable [![Circle CI](https://circleci.com/gh/bubobox/tinymce-variable/tree/master.svg?style=svg&circle-token=e2d0421c9ff5db92e8ed7719b4e3a1656c0b6365)](https://circleci.com/gh/bubobox/tinymce-variable/tree/master)
 
 TinyMCE variable is a plugin that makes it easier to work with variables in text.
+A lot of web applications today allow users to write content with variables. Server side these variables can then be replaced with actual data.
+There are many large companies that use this kind of functionality but a lot of these implementations are not very user friendly.
 
-## Why
+With this project we provide a user friendly implementation of such a feature nicely packaged as a TinyMCE plugin.
 
-I see a lot of companies that have the need for variables in their editors. Maybe one of the most popular is [MailChimp](http://mailchimp.com/) ([merge tags](http://mailchimp.com/features/merge-tags/)), but non of these companies seems to solve this problem in a very usable way. Especially for non technical people I can imagine that seeing something like `*|FNAME|*` scares the sh*t out of them. So let's try to create a solution for this use case in the form of a plugin.
+![TinyMCE variables plugin example](preview.jpg)
 
 ## Demo
 
@@ -12,53 +14,88 @@ I see a lot of companies that have the need for variables in their editors. Mayb
 
 ## Features
 
-* Replace variables like `{example}` with something more visual
+* Replace variables like `{{example}}` with something more readable
 * Variables are not editable
 * Delete variables with one hit on the backspace button
+* Custom class for variable elements
+* Auto replace when typing a variable
 
-## Usage
+## Example
 
-First include the plugin file in your source:
+```
+tinymce.init({
+    selector: "textarea",  // change this value according to your HTML
+    plugins: "variables"
+});
+```
 
-    <script src="tinymce-variable/src/main.js"></script>
+## Options
+These settings affect the execution of the `variables` plugin. The settings described here will affect the visual appearance and the working of `variables` plugin in the current editor instance.
 
-Next add the `variables` plugin to your TinyMCE settings:
+### `variable_mapper`
+This option makes it possible to provide human readable variant of specific variables. If the variables plugin detects such a mapper it will use that value to display the variable in the editor. An example use case for this could be to localize variable names.
 
-    ...
+```
+tinymce.init({
+    selector: "textarea",  // change this value according to your HTML
     plugins: "variables",
-    ...
-
-## Map variable names
-
-You can also automatically map variable names to something more readable or localized for the user.
-An example configuration could be:
-
     variable_mapper: {
         account_id: 'Account ID'
     }
+});
+```
 
-The variable mapper can also be a function which gets the variable name passed as argument:
+### `variable_valid`
+This option makes it possible to provide a specific list of allowed variables, if the variable is not in the list then the plugin will not visualize it as such.
 
-    variable_mapper: function(variable) {
-        return 'exmaple:' + variable;
-    }
-
-## Variable validation
-
-In some cases it could be useful to only allow a specific set of variables. This can be done with following configuration:
-
+```
+tinymce.init({
+    selector: "textarea",  // change this value according to your HTML
+    plugins: "variables",
     variable_valid: ['username', 'sender', 'phone', 'community_name', 'email']
+});
+```
 
-If the variable is not in the array it will not be converted to a visual array on the editor.
+### `variable_class`
+By default each variable instance in the editor will have a class name `variable`. If you want to use a custom class name you can use this option to overwrite it.
 
-## Variable class name
-
-By default each variable has a class name `variable` but you can override this like so:
-
+```
+tinymce.init({
+    selector: "textarea",  // change this value according to your HTML
+    plugins: "variables",
     variable_class: 'my-custom-variable'
+});
+```
 
 ## Develop
+To start a HTTP server to test your can run following command an open the reported URL in your browser.
 
-Start a server to and open it in your browser:
+```
+npm run serve
+```
 
-    npm run serve
+Make sure to run the tests before pushing code or submitting any pull request using:
+
+```
+npm run test
+```
+
+## Products using TinyMCE Variables
+* [BuboBox](https://www.bubobox.com/?utm_source=github&utm_medium=readme&utm_campaign=tinymce-variable)
+* [Ambassify](https://www.ambassify.com/?utm_source=github&utm_medium=readme&utm_campaign=tinymce-variable)
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+## History
+
+For detailed changelog, check [Releases](https://github.com/bubobox/tinymce-variable/releases).
+
+## License
+
+[MIT License](http://opensource.org/licenses/MIT)
