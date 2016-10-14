@@ -74,8 +74,8 @@ By default the prefix and suffix used are, the commonly used, double brackets (`
 tinymce.init({
     selector: "textarea",  // change this value according to your HTML
     plugins: "variables",
-    variable_prefix: '{{',
-    variable_suffix: '}}'
+    variable_prefix: '{%',
+    variable_suffix: '%}'
 });
 ```
 
