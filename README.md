@@ -80,7 +80,7 @@ tinymce.init({
 ```
 
 ## Develop
-To start a HTTP server to test your can run following command an open the reported URL in your browser.
+To start a HTTP server to test you can run following command an open the reported URL in your browser.
 
 ```
 npm run serve
