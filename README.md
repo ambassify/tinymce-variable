@@ -19,6 +19,7 @@ With this project we provide a user friendly implementation of such a feature ni
 * Delete variables with one hit on the backspace button
 * Custom class for variable elements
 * Auto replace when typing a variable
+* Custom variable prefix and suffix
 
 ## Example
 
@@ -30,17 +31,18 @@ tinymce.init({
 ```
 
 ## Options
-These settings affect the execution of the `variables` plugin. The settings described here will affect the visual appearance and the working of `variables` plugin in the current editor instance.
+These settings affect the execution of the `variables` plugin. The settings described here will affect the visual appearance and the working of the `variables` plugin in the current editor instance.
 
 ### `variable_mapper`
-This option makes it possible to provide human readable variant of specific variables. If the variables plugin detects such a mapper it will use that value to display the variable in the editor. An example use case for this could be to localize variable names.
+This option makes it possible to provide a human readable variant of specific variables. If the variables plugin detects such a mapper it will use that value to display the variable in the editor. An example use case for this could be to localize variable names.
 
 ```
 tinymce.init({
     selector: "textarea",
     plugins: "variables",
     variable_mapper: {
-        account_id: 'Account ID'
+        account_id: "Account ID",
+        email: "E-mail address"
     }
 });
 ```
@@ -52,7 +54,7 @@ This option makes it possible to provide a specific list of allowed variables, i
 tinymce.init({
     selector: "textarea",
     plugins: "variables",
-    variable_valid: ['username', 'sender', 'phone', 'community_name', 'email']
+    variable_valid: ["username", "sender", "phone", "community_name", "email"]
 });
 ```
 
@@ -63,7 +65,7 @@ By default each variable instance in the editor will have a class name `variable
 tinymce.init({
     selector: "textarea",
     plugins: "variables",
-    variable_class: 'my-custom-variable'
+    variable_class: "my-custom-variable"
 });
 ```
 
@@ -74,13 +76,13 @@ By default the prefix and suffix used are, the commonly used, double brackets (`
 tinymce.init({
     selector: "textarea",
     plugins: "variables",
-    variable_prefix: '{%',
-    variable_suffix: '%}'
+    variable_prefix: "{%",
+    variable_suffix: "%}"
 });
 ```
 
 ## Develop
-To start a HTTP server to test you can run following command an open the reported URL in your browser.
+To start a HTTP server to test your changes you can run following command and open the reported URL in your browser.
 
 ```
 npm run serve
