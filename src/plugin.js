@@ -13,7 +13,6 @@
 tinymce.PluginManager.add('variables', function(editor) {
 
     var VK = tinymce.util.VK;
-    var stringVariableRegex = new RegExp('{([a-z. _]*)?}', 'g');
 
     /**
      * Object that is used to replace the variable string to be used
@@ -36,6 +35,14 @@ tinymce.PluginManager.add('variables', function(editor) {
      * @type {string}
      */
     var className = editor.getParam("variable_class", "variable");
+
+    /**
+     * Prefix and suffix to use to mark a variable
+     * @type {string}
+     */
+    var prefix = editor.getParam("variable_prefix", "{{");
+    var suffix = editor.getParam("variable_suffix", "}}");
+    var stringVariableRegex = new RegExp(prefix + '([a-z. _]*)?' + suffix, 'g');
 
     /**
      * check if a certain variable is valid
@@ -91,7 +98,8 @@ tinymce.PluginManager.add('variables', function(editor) {
             cleanValue: cleanValue
         });
 
-        return '<span class="' + className + '" data-original-variable="{' + cleanValue + '}" contenteditable="false">' + cleanMappedValue + '</span>';
+        var variable = prefix + cleanValue + suffix;
+        return '<span class="' + className + '" data-original-variable="' + variable + '" contenteditable="false">' + cleanMappedValue + '</span>';
     }
 
     /**

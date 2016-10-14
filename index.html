@@ -54,7 +54,9 @@
                     email: 'Email address',
                     sender: 'Sender name',
                     account_id: 'Account ID'
-                },
+                }
+                // variable_prefix: '{{',
+                // variable_suffix: '}}'
                 // variable_class: 'bbbx-my-variable',
                 //variable_valid: ['username', 'sender', 'phone', 'community_name', 'email']
             });
@@ -62,10 +64,10 @@
 
         <!-- Place this in the body of the page content -->
         <form method="post">
-            <textarea rows="18">Dear {username},
-<p>Thanks for joining our {community_name} community. I hope you'll enjoy your time here. If you would have any question don't hasitate to call me on {phone} or shoot me an email at {email}.</p>
+            <textarea rows="18">Dear {{username}},
+            <p>Thanks for joining our {{community_name}} community. I hope you'll enjoy your time here. If you would have any question don't hasitate to call me on {{phone}} or shoot me an email at {{email}}.</p>
 Sincerely,<br />
-{sender}</textarea>
+{{sender}}</textarea>
         </form>
     </body>
 </html>
