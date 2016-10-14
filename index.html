@@ -17,6 +17,11 @@
             body .mce-edit-area {
                 border: none;
             }
+            #raw {
+                width: 100%;
+                height: 200px;
+                margin: 15px 0;
+            }
         </style>
     </head>
     <body>
@@ -24,7 +29,7 @@
             tinymce.init({
 
                 // basic tinyMCE stuff
-                selector: "textarea",
+                selector: "#demo",
                 content_css: 'style.css',
                 menubar: false,
                 toolbar: "bold,italic,mybutton,code",
@@ -45,8 +50,13 @@
                     // });
 
                     ed.on('variableClick', function(e) {
-                       console.log('click', e);
+                       console.log('click', e.target.getAttribute('data-original-variable'));
+                        ed.plugins.variables.setVariableOption(e.target, 'default', 'Hello');
                     });
+
+                    ed.on('change', function(e) {
+                        document.getElementById('raw').value = ed.getContent();
+                    })
                 },
 
                 // variable plugin related
@@ -66,10 +76,12 @@
 
         <!-- Place this in the body of the page content -->
         <form method="post">
-            <textarea rows="18">Dear {username},
+            <textarea id="demo" rows="18">Dear {username},
 <p>Thanks for joining our {community_name} community. I hope you'll enjoy your time here. If you would have any question don't hasitate to call me on {phone} or shoot me an email at {email}.</p>
 Sincerely,<br />
 {sender}</textarea>
+
+        <textarea id="raw"></textarea>
         </form>
     </body>
 </html>

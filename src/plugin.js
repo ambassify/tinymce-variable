@@ -6,6 +6,9 @@
  *
  * License: https://www.bubobox.com
  * Contributing: https://www.bubobox.com/contributing
+ *
+ * resoureces
+ * - variable parse https://regex101.com/r/MTLKZv/1
  */
 
 /*global tinymce:true */
@@ -13,7 +16,7 @@
 tinymce.PluginManager.add('variables', function(editor) {
 
     var VK = tinymce.util.VK;
-    var stringVariableRegex = new RegExp('{([a-z. _]*)?}', 'g');
+    var stringVariableRegex = new RegExp('{([a-zA-Z0-9. _\|\=-]*)?}', 'g');
 
     /**
      * Object that is used to replace the variable string to be used
@@ -60,14 +63,21 @@ tinymce.PluginManager.add('variables', function(editor) {
         return mapper.hasOwnProperty(cleanValue) ? mapper[cleanValue] : cleanValue;
     }
 
-    /**
-     * Strip variable to keep the plain variable string
-     * @example "{test}" => "test"
-     * @param {string} value
-     * @return {string}
-     */
-    function cleanVariable(value) {
-        return value.replace(/[^a-zA-Z._]/g, "");
+    function parseVariable(value) {
+        var regex = /([a-zA-Z0-9\._]*)(\|(.*))?}/g;
+        var result = regex.exec(value);
+        var info = { original: value, variable: null, options: null };
+
+        if(!result)
+            return info;
+
+        if(result[1] && result[1] !== undefined)
+            info.variable = result[1];
+
+        if(result[3] && result[3] !== undefined)
+            info.options = result[3];
+
+        return info;
     }
 
     /**
@@ -77,14 +87,15 @@ tinymce.PluginManager.add('variables', function(editor) {
      * @return {string}
      */
     function createHTMLVariable( value ) {
-
-        var cleanValue = cleanVariable(value);
+        var parsedVariable = parseVariable(value);
+        var cleanValue = parsedVariable.variable;
 
         // check if variable is valid
         if( ! isValid(cleanValue) )
             return value;
 
         var cleanMappedValue = getMappedValue(cleanValue);
+        console.log('testing', unserialize(parsedVariable.options));
 
         editor.fire('variableToHTML', {
             value: value,
@@ -153,7 +164,18 @@ tinymce.PluginManager.add('variables', function(editor) {
 
         // loop over all nodes that contain a HTML variable
         for (var i = 0; i < nodeList.length; i++) {
-            nodeValue = nodeList[i].getAttribute('data-original-variable');
+            var currentNode = nodeList[i];
+            nodeValue = currentNode.getAttribute('data-original-variable');
+
+            if(currentNode.getAttribute('data-variable-default')) {
+                var value = currentNode.getAttribute('data-variable-default');
+                console.log('found', value);
+                nodeValue = nodeValue.replace('}', '|default=' + value + '}');
+            }
+
+            // console.log('node found', nodeList[i].getAttribute('data-variable-options'));
+            // console.log('node value', nodeValue);
+
             div = editor.dom.create('div', null, nodeValue);
             while ((node = div.lastChild)) {
                 editor.dom.insertAfter(node, nodeList[i]);
@@ -203,6 +225,32 @@ tinymce.PluginManager.add('variables', function(editor) {
         return false;
     }
 
+    function setVariableOption(node, key, value) {
+        node.setAttribute('data-variable-' + key, value);
+    }
+
+    function serialize(obj) {
+        var str = [];
+        for(var p in obj)
+            if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    }
+
+    function unserialize(qstr) {
+        if(!qstr)
+            return qstr;
+
+        var query = {};
+        var a = qstr.substr(1).split('&');
+        for (var i = 0; i < a.length; i++) {
+            var b = a[i].split('=');
+            query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+        }
+        return query;
+    }
+
     /**
      * Trigger special event when user clicks on a variable
      * @return {void}
@@ -214,8 +262,9 @@ tinymce.PluginManager.add('variables', function(editor) {
             return null;
 
         var value = target.getAttribute('data-original-variable');
+        var parsedVariable = parseVariable(value);
         editor.fire('variableClick', {
-            value: cleanVariable(value),
+            value: parsedVariable.value,
             target: target
         });
     }
@@ -226,5 +275,6 @@ tinymce.PluginManager.add('variables', function(editor) {
     editor.on('click', handleClick);
 
     this.addVariable = addVariable;
+    this.setVariableOption = setVariableOption;
 
 });
