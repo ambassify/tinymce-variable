@@ -1,11 +1,11 @@
 /**
  * plugin.js
  *
- * Copyright, Sitebase
+ * Copyright, BuboBox
  * Released under MIT License.
  *
- * License: http://www.sitebase.be
- * Contributing: http://www.sitebase.be/contributing
+ * License: https://www.bubobox.com
+ * Contributing: https://www.bubobox.com/contributing
  */
 
 /*global tinymce:true */
@@ -32,6 +32,12 @@ tinymce.PluginManager.add('variables', function(editor) {
     var valid = editor.getParam("variable_valid", null);
 
     /**
+     * Get custom variable class name
+     * @type {string}
+     */
+    var className = editor.getParam("variable_class", "variable");
+
+    /**
      * check if a certain variable is valid
      * @param {string} name
      * @return {bool}
@@ -55,6 +61,16 @@ tinymce.PluginManager.add('variables', function(editor) {
     }
 
     /**
+     * Strip variable to keep the plain variable string
+     * @example "{test}" => "test"
+     * @param {string} value
+     * @return {string}
+     */
+    function cleanVariable(value) {
+        return value.replace(/[^a-zA-Z._]/g, "");
+    }
+
+    /**
      * convert a text variable "x" to a span with the needed
      * attributes to style it with CSS
      * @param  {string} value
@@ -62,7 +78,7 @@ tinymce.PluginManager.add('variables', function(editor) {
      */
     function createHTMLVariable( value ) {
 
-        var cleanValue = value.replace(/[^a-zA-Z._]/g, "");
+        var cleanValue = cleanVariable(value);
 
         // check if variable is valid
         if( ! isValid(cleanValue) )
@@ -70,12 +86,12 @@ tinymce.PluginManager.add('variables', function(editor) {
 
         var cleanMappedValue = getMappedValue(cleanValue);
 
-        editor.fire('VariableToHTML', {
+        editor.fire('variableToHTML', {
             value: value,
             cleanValue: cleanValue
         });
 
-        return '<span class="variable" data-original-variable="{' + cleanValue + '}" contenteditable="false">' + cleanMappedValue + '</span>';
+        return '<span class="' + className + '" data-original-variable="{' + cleanValue + '}" contenteditable="false">' + cleanMappedValue + '</span>';
     }
 
     /**
@@ -103,7 +119,7 @@ tinymce.PluginManager.add('variables', function(editor) {
             while ((node = div.lastChild)) {
                 editor.dom.insertAfter(node, nodeList[i]);
 
-                if(typeof node.getAttribute === 'function' && node.hasAttribute('data-original-variable')) {
+                if(isVariable(node)) {
                     var next = node.nextSibling;
                     editor.selection.setCursorLocation(next);
                 }
@@ -152,9 +168,7 @@ tinymce.PluginManager.add('variables', function(editor) {
 
     function setCursor(selector) {
         var ell = editor.dom.select(selector)[0];
-        console.log('sel', selector, ell);
         if(ell) {
-            console.log('set cursor', ell, next);
             var next = ell.nextSibling;
             editor.selection.setCursorLocation(next);
         }
@@ -182,9 +196,34 @@ tinymce.PluginManager.add('variables', function(editor) {
         editor.execCommand('mceInsertContent', false, htmlVariable);
     }
 
+    function isVariable(element) {
+        if(typeof element.getAttribute === 'function' && element.hasAttribute('data-original-variable'))
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Trigger special event when user clicks on a variable
+     * @return {void}
+     */
+    function handleClick(e) {
+        var target = e.target;
+
+        if(!isVariable(target))
+            return null;
+
+        var value = target.getAttribute('data-original-variable');
+        editor.fire('variableClick', {
+            value: cleanVariable(value),
+            target: target
+        });
+    }
+
     editor.on('nodechange', stringToHTML );
     editor.on('keyup', stringToHTML );
     editor.on('beforegetcontent', handleContentRerender);
+    editor.on('click', handleClick);
 
     this.addVariable = addVariable;
 

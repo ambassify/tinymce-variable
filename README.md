@@ -51,6 +51,12 @@ In some cases it could be useful to only allow a specific set of variables. This
 
 If the variable is not in the array it will not be converted to a visual array on the editor.
 
+## Variable class name
+
+By default each variable has a class name `variable` but you can override this like so:
+
+    variable_class: 'my-custom-variable'
+
 ## Develop
 
 Start a server to and open it in your browser:

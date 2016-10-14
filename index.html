@@ -39,6 +39,14 @@
                             ed.plugins.variables.addVariable('account_id');
                         }
                     });
+
+                    // ed.on('variableToHTML', function(e) {
+                    //    console.log('test', e);
+                    // });
+
+                    ed.on('variableClick', function(e) {
+                       console.log('click', e);
+                    });
                 },
 
                 // variable plugin related
@@ -51,6 +59,7 @@
                     sender: 'Sender name',
                     account_id: 'Account ID'
                 },
+                // variable_class: 'bbbx-my-variable',
                 //variable_valid: ['username', 'sender', 'phone', 'community_name', 'email']
             });
         </script>
