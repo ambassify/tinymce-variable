@@ -67,6 +67,18 @@ tinymce.init({
 });
 ```
 
+### `variable_prefix` and `variable_suffix`
+By default the prefix and suffix used are, the commonly used, double brackets (`{{` and `}}`). You can customize these if you prefer something else using these options.
+
+```
+tinymce.init({
+    selector: "textarea",  // change this value according to your HTML
+    plugins: "variables",
+    variable_prefix: '{{',
+    variable_suffix: '}}'
+});
+```
+
 ## Develop
 To start a HTTP server to test your can run following command an open the reported URL in your browser.
 
