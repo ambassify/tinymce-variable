@@ -167,7 +167,9 @@ tinymce.PluginManager.add('variables', function(editor) {
      * @return {void}
      */
     function handleContentRerender(e) {
+        // store cursor location
         return e.format === 'raw' ? stringToHTML() : htmlToString();
+        // restore cursor location
     }
 
     /**
@@ -177,7 +179,6 @@ tinymce.PluginManager.add('variables', function(editor) {
      */
     function addVariable(value) {
         var htmlVariable = createHTMLVariable(value);
-        console.log('insert', value, htmlVariable);
         editor.execCommand('mceInsertContent', false, htmlVariable);
     }
 
