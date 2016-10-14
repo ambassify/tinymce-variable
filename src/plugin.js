@@ -62,7 +62,7 @@ tinymce.PluginManager.add('variables', function(editor) {
      */
     function createHTMLVariable( value ) {
 
-        var cleanValue = value.replace(/[^a-zA-Z._]/g, "");
+        var cleanValue = value.replace(/[^a-zA-Z. _]/g, "");
 
         // check if variable is valid
         if( ! isValid(cleanValue) )
