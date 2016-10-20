@@ -10,7 +10,7 @@
 
 /*global tinymce:true */
 
-tinymce.PluginManager.add('variables', function(editor) {
+tinymce.PluginManager.add('variable', function(editor) {
 
     var VK = tinymce.util.VK;
 
