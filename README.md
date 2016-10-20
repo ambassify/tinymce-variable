@@ -26,7 +26,7 @@ With this project we provide a user friendly implementation of such a feature ni
 ```
 tinymce.init({
     selector: "textarea",  // change this value according to your HTML
-    plugins: "variables"
+    plugins: "variable"
 });
 ```
 
@@ -39,7 +39,7 @@ This option makes it possible to provide a human readable variant of specific va
 ```
 tinymce.init({
     selector: "textarea",
-    plugins: "variables",
+    plugins: "variable",
     variable_mapper: {
         account_id: "Account ID",
         email: "E-mail address"
@@ -53,7 +53,7 @@ This option makes it possible to provide a specific list of allowed variables, i
 ```
 tinymce.init({
     selector: "textarea",
-    plugins: "variables",
+    plugins: "variable",
     variable_valid: ["username", "sender", "phone", "community_name", "email"]
 });
 ```
@@ -64,7 +64,7 @@ By default each variable instance in the editor will have a class name `variable
 ```
 tinymce.init({
     selector: "textarea",
-    plugins: "variables",
+    plugins: "variable",
     variable_class: "my-custom-variable"
 });
 ```
@@ -75,7 +75,7 @@ By default the prefix and suffix used are, the commonly used, double brackets (`
 ```
 tinymce.init({
     selector: "textarea",
-    plugins: "variables",
+    plugins: "variable",
     variable_prefix: "{%",
     variable_suffix: "%}"
 });
