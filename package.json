@@ -1,6 +1,6 @@
 {
   "name": "tinymce-variable",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "scripts": {
     "test": "eslint -c .eslintrc src/plugin.js",
     "serve": "python -m SimpleHTTPServer",
