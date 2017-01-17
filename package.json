@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bubobox/tinymce-variable.git"
+    "url": "https://github.com/ambassify/tinymce-variable.git"
   },
   "description": "Make it possible to use variables in your TinyMCE editor.",
   "main": "src/plugin.js",
@@ -17,6 +17,6 @@
     "uglifyjs": "^2.4.10"
   },
   "bugs": {
-    "url": "https://github.com/bubobox/tinymce-variable/issues"
+    "url": "https://github.com/ambassify/tinymce-variable/issues"
   }
 }

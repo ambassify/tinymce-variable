@@ -1,4 +1,4 @@
-# TinyMCE variable [![Circle CI](https://circleci.com/gh/bubobox/tinymce-variable/tree/master.svg?style=svg&circle-token=e2d0421c9ff5db92e8ed7719b4e3a1656c0b6365)](https://circleci.com/gh/bubobox/tinymce-variable/tree/master)
+# TinyMCE variable [![Circle CI](https://circleci.com/gh/ambassify/tinymce-variable/tree/master.svg?style=svg&circle-token=e2d0421c9ff5db92e8ed7719b4e3a1656c0b6365)](https://circleci.com/gh/ambassify/tinymce-variable/tree/master)
 
 TinyMCE variable is a plugin that makes it easier to work with variables in text.
 A lot of web applications today allow users to write content with variables. Server side these variables can then be replaced with actual data.
@@ -10,7 +10,7 @@ With this project we provide a user friendly implementation of such a feature ni
 
 ## Demo
 
-[Demo example of this plugin](http://bubobox.github.io/tinymce-variable/)
+[Demo example of this plugin](http://ambassify.github.io/tinymce-variable/)
 
 ## Features
 
@@ -108,7 +108,7 @@ npm run test
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/bubobox/tinymce-variable/releases).
+For detailed changelog, check [Releases](https://github.com/ambassify/tinymce-variable/releases).
 
 ## License
 

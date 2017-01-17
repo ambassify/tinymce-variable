@@ -1,11 +1,11 @@
 /**
  * plugin.js
  *
- * Copyright, BuboBox
+ * Copyright, Ambassify
  * Released under MIT License.
  *
- * License: https://www.bubobox.com
- * Contributing: https://www.bubobox.com/contributing
+ * License: https://www.ambassify.com
+ * Contributing: https://www.ambassify.com/contributing
  */
 
 /*global tinymce:true */
