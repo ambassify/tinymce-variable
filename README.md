@@ -1,4 +1,4 @@
-# TinyMCE variable [![Circle CI](https://circleci.com/gh/bubobox/tinymce-variable/tree/master.svg?style=svg&circle-token=e2d0421c9ff5db92e8ed7719b4e3a1656c0b6365)](https://circleci.com/gh/bubobox/tinymce-variable/tree/master)
+# TinyMCE variable [![CircleCI token](https://img.shields.io/circleci/project/github/ambassify/tinymce-variable/master.svg)](https://circleci.com/gh/ambassify/manage) [![maintainer](https://img.shields.io/badge/maintainer-Sitebase-brightgreen.svg)](https://github.com/Sitebase)
 
 TinyMCE variable is a plugin that makes it easier to work with variables in text.
 A lot of web applications today allow users to write content with variables. Server side these variables can then be replaced with actual data.
