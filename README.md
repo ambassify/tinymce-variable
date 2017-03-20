@@ -10,7 +10,7 @@ With this project we provide a user friendly implementation of such a feature ni
 
 ## Demo
 
-[Demo example of this plugin](http://bubobox.github.io/tinymce-variable/)
+[Demo example of this plugin](https://ambassify.github.io/tinymce-variable/)
 
 ## Features
 
