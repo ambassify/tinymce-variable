@@ -74,7 +74,7 @@ tinymce.PluginManager.add('variable', function(editor) {
      * @return {string}
      */
     function cleanVariable(value) {
-        return value.replace(/[^a-zA-Z._]/g, "");
+        return value.replace(/[^a-zA-Z0-9._]/g, "");
     }
 
     /**
