@@ -231,9 +231,20 @@ tinymce.PluginManager.add('variable', function(editor) {
         });
     }
 
+    function preventDrag(e) {
+        var target = e.target;
+
+        if(!isVariable(target))
+            return null;
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }
+
     editor.on('beforegetcontent', handleContentRerender);
-    editor.on('getcontent', stringToHTML );
+    editor.on('getcontent', stringToHTML);
     editor.on('click', handleClick);
+    editor.on('mousedown', preventDrag);
 
     this.addVariable = addVariable;
 
