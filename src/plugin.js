@@ -42,7 +42,15 @@ tinymce.PluginManager.add('variable', function(editor) {
      */
     var prefix = editor.getParam("variable_prefix", "{{");
     var suffix = editor.getParam("variable_suffix", "}}");
-    var stringVariableRegex = new RegExp(prefix + '([a-z. _]*)?' + suffix, 'g');
+
+    /**
+     * RegExp is not stateless with '\g' so we return a new variable each call
+     * @return {RegExp}
+     */
+    function getStringVariableRegex()
+    {
+        return new RegExp(prefix + "[a-zA-Z. _]+" + suffix, "g");
+    }
 
     /**
      * check if a certain variable is valid
@@ -115,14 +123,14 @@ tinymce.PluginManager.add('variable', function(editor) {
 
         // find nodes that contain a string variable
         tinymce.walk(editor.getBody(), function(n) {
-            if (n.nodeType == 3 && n.nodeValue && stringVariableRegex.test(n.nodeValue)) {
+            if (n.nodeType == 3 && n.nodeValue && getStringVariableRegex().test(n.nodeValue)) {
                 nodeList.push(n);
             }
         }, 'childNodes');
 
         // loop over all nodes that contain a string variable
         for (var i = 0; i < nodeList.length; i++) {
-            nodeValue = nodeList[i].nodeValue.replace(stringVariableRegex, createHTMLVariable);
+            nodeValue = nodeList[i].nodeValue.replace(getStringVariableRegex(), createHTMLVariable);
             div = editor.dom.create('div', null, nodeValue);
             while ((node = div.lastChild)) {
                 editor.dom.insertAfter(node, nodeList[i]);
