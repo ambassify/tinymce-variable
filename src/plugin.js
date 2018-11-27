@@ -129,7 +129,6 @@ tinymce.PluginManager.add('variable', function(editor) {
 
                 if(isVariable(node)) {
                     var next = node.nextSibling;
-                    editor.selection.setCursorLocation(next);
                 }
             }
 
@@ -174,14 +173,6 @@ tinymce.PluginManager.add('variable', function(editor) {
 
     }
 
-    function setCursor(selector) {
-        var ell = editor.dom.select(selector)[0];
-        if(ell) {
-            var next = ell.nextSibling;
-            editor.selection.setCursorLocation(next);
-        }
-    }
-
     /**
      * handle formatting the content of the editor based on
      * the current format. For example if a user switches to source view and back
@@ -190,8 +181,12 @@ tinymce.PluginManager.add('variable', function(editor) {
      */
     function handleContentRerender(e) {
         // store cursor location
+        var cursorBookmark = tinymce.activeEditor.selection.getBookmark(1, true);
+
         return e.format === 'raw' ? stringToHTML() : htmlToString();
+
         // restore cursor location
+        tinymce.activeEditor.selection.moveToBookmark(cursorBookmark);
     }
 
     /**
