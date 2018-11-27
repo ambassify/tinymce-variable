@@ -228,9 +228,8 @@ tinymce.PluginManager.add('variable', function(editor) {
         });
     }
 
-    editor.on('nodechange', stringToHTML );
-    editor.on('keyup', stringToHTML );
     editor.on('beforegetcontent', handleContentRerender);
+    editor.on('getcontent', stringToHTML );
     editor.on('click', handleClick);
 
     this.addVariable = addVariable;
