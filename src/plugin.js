@@ -149,7 +149,7 @@ tinymce.PluginManager.add('variable', function(editor) {
             node,
             div;
 
-            // find nodes that contain a HTML variable
+        // find nodes that contain a HTML variable
         tinymce.walk( editor.getBody(), function(n) {
             if (n.nodeType == 1) {
                 var original = n.getAttribute('data-original-variable');
